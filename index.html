@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Rahas Sharma — Independent Researcher</title>
+<meta name="description" content="Rahas Sharma, Class XI student and independent researcher, Kendriya Vidyalaya No. 1 Akhnoor, Jammu & Kashmir, India. Work on edge computing for agriculture and low-cost humanitarian wearables." />
+<meta name="author" content="Rahas Sharma" />
+<link rel="canonical" href="https://rahassharma.github.io/" />
+
+<!-- No external fonts, no CDNs, no trackers. Pure inline design. -->
+<style>
+  :root{
+    --ink:#0b1220;
+    --navy:#0e2a52;
+    --blue:#1e5fbf;
+    --red:#b2223a;
+    --amber:#c77a15;
+    --muted:#5b6474;
+    --rule:#e5e7eb;
+    --soft:#f6f7f9;
+    --page:#ffffff;
+    --card:#ffffff;
+    --max:1080px;
+    --serif: "Iowan Old Style","Palatino Linotype","Palatino","URW Palladio L",Georgia,serif;
+    --sans:  -apple-system,BlinkMacSystemFont,"SF Pro Text","Helvetica Neue","Segoe UI",Roboto,Arial,sans-serif;
+    --mono:  ui-monospace,"SF Mono","Menlo","Consolas",monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--page);color:var(--ink);font-family:var(--sans);
+            -webkit-font-smoothing:antialiased;line-height:1.55;font-size:16px}
+  a{color:var(--blue);text-decoration:none;border-bottom:1px solid transparent;
+    transition:border-color .15s}
+  a:hover{border-bottom-color:var(--blue)}
+  main{max-width:var(--max);margin:0 auto;padding:64px 32px 96px}
+
+  /* ---------- hero ---------- */
+  .hero{padding-top:24px;padding-bottom:44px;border-bottom:1px solid var(--rule);
+        margin-bottom:56px}
+  .hero .kicker{font-size:12px;letter-spacing:.08em;color:var(--muted);
+                text-transform:uppercase;font-weight:600;margin-bottom:14px}
+  .hero h1{font-family:var(--serif);font-weight:600;font-size:52px;line-height:1.08;
+           color:var(--navy);margin-bottom:12px;letter-spacing:-.01em}
+  .hero .role{font-size:19px;color:var(--muted);margin-bottom:22px;max-width:760px}
+  .hero .contactline{font-size:14px;color:var(--muted)}
+  .hero .contactline a{color:var(--ink)}
+  .hero .contactline span{color:var(--rule);margin:0 10px}
+
+  /* ---------- section headings ---------- */
+  section{margin-bottom:64px}
+  section > h2{font-family:var(--serif);font-weight:600;font-size:14px;
+               letter-spacing:.12em;color:var(--muted);text-transform:uppercase;
+               margin-bottom:24px;padding-bottom:10px;border-bottom:1px solid var(--rule)}
+
+  /* ---------- about ---------- */
+  .about p{max-width:760px;font-size:17px;color:var(--ink);margin-bottom:14px}
+  .about p em{color:var(--navy);font-style:normal;font-weight:600}
+
+  /* ---------- projects ---------- */
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media (max-width:720px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--rule);border-radius:8px;
+        padding:24px 26px;transition:border-color .15s,transform .15s}
+  .card:hover{border-color:var(--blue);transform:translateY(-1px)}
+  .card .tag{display:inline-block;font-size:11px;letter-spacing:.08em;
+             font-weight:700;text-transform:uppercase;padding:3px 8px;border-radius:3px;
+             margin-bottom:14px}
+  .card .tag.agri{color:#0d5b2f;background:#e6f2ec}
+  .card .tag.health{color:#7a1a2a;background:#f7e4e8}
+  .card h3{font-family:var(--serif);font-size:22px;line-height:1.25;color:var(--navy);
+           font-weight:600;margin-bottom:8px}
+  .card .sub{font-size:14px;color:var(--muted);margin-bottom:14px;font-style:italic}
+  .card p{font-size:15px;color:var(--ink);margin-bottom:14px}
+  .card .meta{font-size:13px;color:var(--muted);margin-bottom:6px}
+  .card .meta strong{color:var(--ink);font-weight:600}
+
+  /* ---------- publications / submissions timeline ---------- */
+  .pub{display:flex;gap:20px;padding:20px 0;border-bottom:1px solid var(--rule)}
+  .pub:last-child{border-bottom:none}
+  .pub .year{font-family:var(--mono);font-size:13px;color:var(--muted);
+             min-width:96px;padding-top:2px;letter-spacing:.02em}
+  .pub .body{flex:1}
+  .pub .title{font-family:var(--serif);font-size:18px;color:var(--navy);
+              font-weight:600;line-height:1.35;margin-bottom:4px}
+  .pub .venue{font-size:14px;color:var(--muted);font-style:italic;margin-bottom:6px}
+  .pub .status{display:inline-block;font-size:11px;letter-spacing:.06em;font-weight:700;
+               text-transform:uppercase;padding:2px 8px;border-radius:3px;margin-right:8px}
+  .status.accepted{color:#0d5b2f;background:#e6f2ec}
+  .status.underreview{color:#7a4a0a;background:#faf0dc}
+  .status.submitted{color:#1e3f80;background:#e5edf9}
+  .status.selected{color:#0d5b2f;background:#e6f2ec}
+  .pub .note{font-size:13px;color:var(--muted);margin-top:4px}
+
+  /* ---------- recognition ---------- */
+  .rec{display:flex;gap:20px;padding:18px 0;border-bottom:1px solid var(--rule)}
+  .rec:last-child{border-bottom:none}
+  .rec .year{font-family:var(--mono);font-size:13px;color:var(--muted);min-width:96px}
+  .rec .body{flex:1}
+  .rec .body strong{font-family:var(--serif);color:var(--navy);font-size:16px}
+  .rec .body .detail{font-size:14px;color:var(--muted);margin-top:2px}
+
+  /* ---------- footer ---------- */
+  footer{max-width:var(--max);margin:0 auto;padding:32px;border-top:1px solid var(--rule);
+         text-align:center;font-size:13px;color:var(--muted)}
+  footer p{margin-bottom:4px}
+
+  /* ---------- utility ---------- */
+  .accent{color:var(--blue)}
+  .mono{font-family:var(--mono);font-size:.92em}
+</style>
+</head>
+<body>
+
+<main>
+
+  <!-- ===================== HERO ===================== -->
+  <header class="hero">
+    <div class="kicker">Independent Researcher · Class XI</div>
+    <h1>Rahas Sharma</h1>
+    <p class="role">
+      Building low-cost, offline-capable edge systems for agriculture and public health
+      in resource-constrained Indian contexts.
+    </p>
+    <p class="contactline">
+      <a href="mailto:rahas.sudan10@gmail.com">rahas.sudan10@gmail.com</a>
+      <span>·</span>
+      <a href="https://github.com/rahassharma">github/rahassharma</a>
+      <span>·</span>
+      <a href="https:www.linkedin.com/in/rahas-sharma-a7b2803a5/">LinkedIn</a>
+      <span>·</span>
+      Kendriya Vidyalaya Sangathan
+      <span>·</span>
+      Jammu &amp; Kashmir, India
+    </p>
+  </header>
+
+  <!-- ===================== ABOUT ===================== -->
+  <section class="about">
+    <h2>About</h2>
+    <p>
+      I am a Class XI student and independent researcher working on edge-computing and
+      sensor-fusion systems that address problems most commercial technology overlooks:
+      <em>smallholder farmers</em> without reliable internet, <em>informal workers</em>
+      without smartphones, and <em>rural patients</em> outside English-language health
+      infrastructure.
+    </p>
+    <p>
+      My work sits at the intersection of embedded hardware, state estimation, and
+      humanitarian-technology design constraints — particularly the constraint of building
+      systems that must still function on the day the network fails, the phone battery
+      dies, or the wearer cannot read the display.
+    </p>
+  </section>
+
+  <!-- ===================== PROJECTS ===================== -->
+  <section>
+    <h2>Active Projects</h2>
+    <div class="grid">
+
+      <article class="card">
+        <span class="tag agri">Precision Agriculture</span>
+        <h3>Offline-first decision support for smallholder irrigation</h3>
+        <div class="sub">Edge sensing · state-space filtering · IMD forecast integration</div>
+        <p>
+          A three-layer sensor-to-app system for the paddy–wheat rotations of Northwest
+          India. Runs fully without a network as its baseline; opportunistically enhances
+          decisions with India Meteorological Department forecast data when connectivity is
+          available. Explainability layer renders reasoning traces in the 22 scheduled
+          Indian languages without cloud inference.
+        </p>
+        <div class="meta"><strong>Status:</strong> Peer-review, IEEE conference (2026)</div>
+      </article>
+
+      <article class="card">
+        <span class="tag health">Humanitarian Wearables</span>
+        <h3>Phone-free wristband for cardiac and heat-stress early warning</h3>
+        <div class="sub">Standalone edge inference · voice-first UX · cellular escalation</div>
+        <p>
+          A wristband architected for India's informal workforce — outdoor labourers,
+          rural elderly, post-cardiac patients — for whom paired-smartphone medical
+          wearables are structurally inaccessible. Voice-first alerts in regional Indian
+          languages; onboard cellular escalation without smartphone dependence.
+        </p>
+        <div class="meta"><strong>Status:</strong> Peer-review, IEEE conference (2026)</div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===================== PUBLICATIONS ===================== -->
+  <section>
+    <h2>Submissions &amp; Publications</h2>
+
+    <div class="pub">
+      <div class="year">Aug 2026</div>
+      <div class="body">
+        <div class="title">Aarogya Kavach (Poster Track)</div>
+        <div class="venue">IEEE Global Humanitarian Technology Conference (GHTC 2026) · Boulder, CO</div>
+        <span class="status accepted">Accepted</span>
+        <div class="note">Poster accepted 1 August 2026. Attendance declined due to age and travel constraints.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== RECOGNITION ===================== -->
+  <section>
+    <h2>Recognition</h2>
+
+    <div class="rec">
+      <div class="year">2025</div>
+      <div class="body">
+        <strong>National Youth Parliament Competition (36th NYPC), KVS</strong>
+        <div class="detail">Zonal-round result. Felicitated at Sansad Bhavan by Union Minister of State Sh. Arjun Ram Meghwal.</div>
+      </div>
+    </div>
+
+    <div class="rec">
+      <div class="year">2024</div>
+      <div class="body">
+        <strong>Rashtriya Bal Vaigyanik Pradarshani (RSBVP) — SoilSense</strong>
+        <div class="detail">National-level science exhibition representation with an earlier precision-agriculture hardware prototype.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== INTERESTS ===================== -->
+  <section>
+    <h2>Research Interests</h2>
+    <p style="max-width:760px;font-size:16px;color:var(--ink)">
+      Edge and offline-first computing · Sensor fusion and state estimation ·
+      Low-cost embedded systems for humanitarian applications ·
+      Explainable AI for low-literacy users · Regional-language interfaces ·
+      Precision agriculture in resource-constrained smallholder contexts ·
+      Wearable health monitoring for informal workforces.
+    </p>
+  </section>
+
+</main>
+
+<footer>
+  <p>© 2026 Rahas Sharma. Built without frameworks, trackers, or external fonts.</p>
+  <p>Last updated August 2026.</p>
+</footer>
+
+</body>
+</html>
