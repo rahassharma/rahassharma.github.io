@@ -181,12 +181,43 @@ function normalizeSnapshot(raw: unknown): Partial<SiteSnapshot> | null {
 
   if (obj.profile && typeof obj.profile === 'object') {
     const p = obj.profile as Record<string, unknown>;
+    const rawFonts =
+      p.fonts && typeof p.fonts === 'object'
+        ? (p.fonts as Record<string, unknown>)
+        : undefined;
     normalized.profile = {
       ...(p as unknown as SiteProfile),
       savedColorPresets: toArray(p.savedColorPresets) ?? [],
       socialLinks: toArray(p.socialLinks) ?? [],
       philosophyPillars: toArray(p.philosophyPillars) ?? [],
       demographicsServed: toArray(p.demographicsServed) ?? [],
+      ...(rawFonts
+        ? {
+            fonts: {
+              headings:
+                typeof rawFonts.headings === 'string'
+                  ? rawFonts.headings
+                  : 'instrument-serif',
+              body:
+                typeof rawFonts.body === 'string'
+                  ? rawFonts.body
+                  : 'plus-jakarta-sans',
+              buttons:
+                typeof rawFonts.buttons === 'string'
+                  ? rawFonts.buttons
+                  : 'plus-jakarta-sans',
+              nav:
+                typeof rawFonts.nav === 'string'
+                  ? rawFonts.nav
+                  : 'plus-jakarta-sans',
+              mono:
+                typeof rawFonts.mono === 'string'
+                  ? rawFonts.mono
+                  : 'jetbrains-mono',
+              uploadedFonts: toArray(rawFonts.uploadedFonts) ?? [],
+            },
+          }
+        : {}),
     };
   }
 

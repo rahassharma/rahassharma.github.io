@@ -18,6 +18,8 @@
 
     --font-serif: 'Instrument Serif', Georgia, serif;
     --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-buttons: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-nav: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
   }
 
@@ -83,12 +85,34 @@
   }
 }
 
-.font-serif-display {
+.font-serif-display,
+h1,
+h2,
+h3 {
   font-family: var(--font-serif);
 }
 
-.font-mono-meta {
+.font-mono-meta,
+code,
+pre {
   font-family: var(--font-mono);
+}
+
+button,
+input,
+select,
+textarea,
+a[class*="rounded-full"],
+.font-btn {
+  font-family: var(--font-buttons);
+}
+
+header nav a,
+header a[aria-label],
+footer a,
+footer button,
+.font-nav {
+  font-family: var(--font-nav);
 }
 
 /* Subtle grain overlay for tactile warmth */

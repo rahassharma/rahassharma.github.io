@@ -21,6 +21,7 @@ import {
   EyeOff,
   Image as ImageIcon,
   Globe,
+  CaseSensitive,
 } from 'lucide-react';
 import {
   ACCENT_OPTIONS,
@@ -38,6 +39,8 @@ import { normalizeHex } from '../utils/colorUtils';
 import { ImageControl } from './ImageControl';
 import { SOCIAL_PLATFORM_OPTIONS, SocialIcon } from './SocialIcons';
 import { PublishTab } from './PublishTab';
+import { FontsTab } from './FontsTab';
+import { DEFAULT_FONT_SETTINGS } from '../utils/fontManager';
 
 export interface SectionVisibility {
   mission: boolean;
@@ -58,6 +61,7 @@ export type AdminTabId =
   | 'profile'
   | 'hero'
   | 'images'
+  | 'fonts'
   | 'mission'
   | 'publications'
   | 'projects'
@@ -92,6 +96,7 @@ const TABS: { id: AdminTabId; label: string; icon: React.ElementType }[] = [
   { id: 'profile', label: 'Profile', icon: User },
   { id: 'hero', label: 'Hero', icon: Type },
   { id: 'images', label: 'Images', icon: ImageIcon },
+  { id: 'fonts', label: 'Fonts', icon: CaseSensitive },
   { id: 'mission', label: 'Mission', icon: Lightbulb },
   { id: 'publications', label: 'Publications', icon: BookOpen },
   { id: 'projects', label: 'Projects', icon: Cpu },
@@ -464,6 +469,13 @@ export const AdminPanel: React.FC<AdminPanelProps> = ({
                 hasUnpublishedChanges={hasUnpublishedChanges}
                 onPublished={onPublished}
                 onPullLive={onPullLive}
+              />
+            )}
+
+            {tab === 'fonts' && (
+              <FontsTab
+                fonts={profile.fonts || DEFAULT_FONT_SETTINGS}
+                onChange={(nextFonts) => updateProfileField('fonts', nextFonts)}
               />
             )}
 

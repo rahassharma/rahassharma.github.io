@@ -1,3 +1,5 @@
+import { DEFAULT_FONT_SETTINGS, FontSettings } from '../utils/fontManager';
+
 export type AccentKey = 'terracotta' | 'forest' | 'cobalt' | 'ochre' | 'custom';
 
 export interface CustomColorPreset {
@@ -102,6 +104,7 @@ export interface SiteProfile {
   accent: AccentKey;
   customAccentHex: string;
   savedColorPresets: CustomColorPreset[];
+  fonts: FontSettings;
   headlineStart: string;
   headlineAccent: string;
   headlineEnd: string;
@@ -160,6 +163,7 @@ export const DEFAULT_PROFILE: SiteProfile = {
   accent: 'forest',
   customAccentHex: '#265C4B',
   savedColorPresets: [],
+  fonts: DEFAULT_FONT_SETTINGS,
   headlineStart: 'Offline-first',
   headlineAccent: 'edge systems',
   headlineEnd: 'for the people commercial tech overlooks.',

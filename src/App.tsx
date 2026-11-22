@@ -27,6 +27,10 @@ import {
 import { destroySession, isAuthenticated } from './utils/adminAuth';
 import { computeAccentTokens, normalizeHex } from './utils/colorUtils';
 import {
+  DEFAULT_FONT_SETTINGS,
+  applyFontSettingsToDocument,
+} from './utils/fontManager';
+import {
   SiteSnapshot,
   fetchWorldwideSiteData,
   getEffectivePublicConfig,
@@ -67,6 +71,15 @@ function hydrateProfile(raw: Partial<SiteProfile> | undefined): SiteProfile {
     socialLinks: Array.isArray(base.socialLinks)
       ? base.socialLinks
       : DEFAULT_PROFILE.socialLinks,
+    fonts: base.fonts
+      ? {
+          ...DEFAULT_FONT_SETTINGS,
+          ...base.fonts,
+          uploadedFonts: Array.isArray(base.fonts.uploadedFonts)
+            ? base.fonts.uploadedFonts
+            : [],
+        }
+      : DEFAULT_FONT_SETTINGS,
     philosophyPillars:
       Array.isArray(base.philosophyPillars) && base.philosophyPillars.length > 0
         ? base.philosophyPillars
@@ -256,6 +269,10 @@ export function App() {
       // ignore
     }
   }, [theme, profile.accent, profile.customAccentHex]);
+
+  useEffect(() => {
+    applyFontSettingsToDocument(profile.fonts || DEFAULT_FONT_SETTINGS);
+  }, [profile.fonts]);
 
   useEffect(() => {
     document.title = `${profile.name} — ${profile.tagline}`;
