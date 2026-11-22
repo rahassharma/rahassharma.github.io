@@ -1,0 +1,143 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --bg: #F9F8F6;
+    --surface: #FFFFFF;
+    --surface-subtle: #F2EFEA;
+    --border: #E6E2DA;
+    --border-strong: #D2CCC1;
+    --text: #171614;
+    --text-secondary: #5E5A53;
+    --text-muted: #8C867C;
+
+    /* Default Terracotta Accent */
+    --accent: #C04B2D;
+    --accent-hover: #A53D22;
+    --accent-soft: #F7E8E3;
+
+    --font-serif: 'Instrument Serif', Georgia, serif;
+    --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+  }
+
+  [data-theme="dark"] {
+    --bg: #121110;
+    --surface: #1A1917;
+    --surface-subtle: #23211E;
+    --border: #2C2925;
+    --border-strong: #3E3A34;
+    --text: #F4F2EE;
+    --text-secondary: #B0AAA0;
+    --text-muted: #7C766D;
+
+    --accent: #E26B4B;
+    --accent-hover: #EE7E60;
+    --accent-soft: rgba(226, 107, 75, 0.14);
+  }
+
+  [data-accent="forest"] {
+    --accent: #265C4B;
+    --accent-hover: #1D493B;
+    --accent-soft: #E3EFEA;
+  }
+  [data-theme="dark"][data-accent="forest"] {
+    --accent: #52A58A;
+    --accent-hover: #65BA9E;
+    --accent-soft: rgba(82, 165, 138, 0.15);
+  }
+
+  [data-accent="cobalt"] {
+    --accent: #2552B0;
+    --accent-hover: #1C418E;
+    --accent-soft: #E4ECFB;
+  }
+  [data-theme="dark"][data-accent="cobalt"] {
+    --accent: #6894F2;
+    --accent-hover: #82A8F6;
+    --accent-soft: rgba(104, 148, 242, 0.15);
+  }
+
+  [data-accent="ochre"] {
+    --accent: #A56A1B;
+    --accent-hover: #885614;
+    --accent-soft: #F6ECD9;
+  }
+  [data-theme="dark"][data-accent="ochre"] {
+    --accent: #DFA24B;
+    --accent-hover: #EBB566;
+    --accent-soft: rgba(223, 162, 75, 0.15);
+  }
+
+  html {
+    background-color: var(--bg);
+    color: var(--text);
+    font-family: var(--font-sans);
+    transition: background-color 0.25s ease, color 0.25s ease;
+  }
+
+  body {
+    background-color: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+  }
+}
+
+.font-serif-display {
+  font-family: var(--font-serif);
+}
+
+.font-mono-meta {
+  font-family: var(--font-mono);
+}
+
+/* Subtle grain overlay for tactile warmth */
+.paper-grain {
+  background-image: radial-gradient(rgba(23, 22, 20, 0.03) 1px, transparent 0);
+  background-size: 24px 24px;
+}
+
+[data-theme="dark"] .paper-grain {
+  background-image: radial-gradient(rgba(244, 242, 238, 0.03) 1px, transparent 0);
+}
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.animate-fade-up-delay-1 {
+  opacity: 0;
+  animation: fadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+}
+
+.animate-fade-up-delay-2 {
+  opacity: 0;
+  animation: fadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.2s forwards;
+}
+
+.animate-fade-up-delay-3 {
+  opacity: 0;
+  animation: fadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.3s forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-up,
+  .animate-fade-up-delay-1,
+  .animate-fade-up-delay-2,
+  .animate-fade-up-delay-3 {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+}
