@@ -1,4 +1,29 @@
-export type AccentKey = 'terracotta' | 'forest' | 'cobalt' | 'ochre';
+export type AccentKey = 'terracotta' | 'forest' | 'cobalt' | 'ochre' | 'custom';
+
+export interface CustomColorPreset {
+  id: string;
+  label: string;
+  hex: string;
+}
+
+export type SocialPlatform =
+  | 'linkedin'
+  | 'x'
+  | 'scholar'
+  | 'orcid'
+  | 'ieee'
+  | 'github'
+  | 'youtube'
+  | 'instagram'
+  | 'website';
+
+export interface SocialLink {
+  id: string;
+  platform: SocialPlatform;
+  label: string;
+  url: string;
+  enabled: boolean;
+}
 
 export type ProjectCategory =
   | 'All'
@@ -10,10 +35,10 @@ export interface Publication {
   indexLabel: string;
   title: string;
   venue: string;
-  location: string;
+  location?: string;
   year: string;
   status: string;
-  statusType: 'paper' | 'poster';
+  statusType: 'paper' | 'poster' | 'late-breaking';
   role: string;
   abstract: string;
   note?: string;
@@ -26,6 +51,8 @@ export interface ProjectSpecBlock {
   content: string;
 }
 
+export type ImageFit = 'cover' | 'contain';
+
 export interface Project {
   id: string;
   code: string;
@@ -36,6 +63,10 @@ export interface Project {
   year: string;
   statusBadge: string;
   image: string;
+  imageAlt?: string;
+  imagePosition?: string;
+  imageFit?: ImageFit;
+  imageZoom?: number;
   summary: string;
   problem: string;
   specs: ProjectSpecBlock[];
@@ -67,10 +98,20 @@ export interface SiteProfile {
   githubUrl: string;
   githubHandle: string;
   githubNote: string;
+  socialLinks: SocialLink[];
   accent: AccentKey;
+  customAccentHex: string;
+  savedColorPresets: CustomColorPreset[];
   headlineStart: string;
   headlineAccent: string;
   headlineEnd: string;
+  heroSummary: string;
+  heroImage: string;
+  heroImageCaption: string;
+  heroImageAlt: string;
+  heroImagePosition: string;
+  heroImageFit: ImageFit;
+  heroImageZoom: number;
   missionStatement: string;
   philosophyPillars: {
     title: string;
@@ -82,7 +123,11 @@ export interface SiteProfile {
   }[];
 }
 
-export const ACCENT_OPTIONS: { key: AccentKey; label: string; swatch: string }[] = [
+export const ACCENT_OPTIONS: {
+  key: Exclude<AccentKey, 'custom'>;
+  label: string;
+  swatch: string;
+}[] = [
   { key: 'terracotta', label: 'Terracotta', swatch: '#C04B2D' },
   { key: 'forest', label: 'Forest', swatch: '#265C4B' },
   { key: 'cobalt', label: 'Cobalt', swatch: '#2552B0' },
@@ -103,10 +148,29 @@ export const DEFAULT_PROFILE: SiteProfile = {
   githubHandle: 'github.com/rahassharma',
   githubNote:
     'Public repositories hosted here; double-blind anonymous repositories are linked directly inside peer-reviewed manuscripts.',
+  socialLinks: [
+    {
+      id: 'social-linkedin',
+      platform: 'linkedin',
+      label: 'LinkedIn',
+      url: '',
+      enabled: true,
+    },
+  ],
   accent: 'forest',
+  customAccentHex: '#265C4B',
+  savedColorPresets: [],
   headlineStart: 'Offline-first',
   headlineAccent: 'edge systems',
   headlineEnd: 'for the people commercial tech overlooks.',
+  heroSummary:
+    'Bridging sensor fusion, applied machine learning, and rugged hardware engineering to solve systemic challenges in Indian agriculture and public health — sole author of three IEEE conference acceptances.',
+  heroImage: '/images/hero-lab.jpg',
+  heroImageCaption: 'FIG. 01 — EDGE HARDWARE BENCH',
+  heroImageAlt: 'Edge computing and sensor fusion hardware research bench',
+  heroImagePosition: '50% 50%',
+  heroImageFit: 'cover',
+  heroImageZoom: 1,
   missionStatement:
     'I am an independent researcher specializing in low-cost, offline-first edge architectures for resource-constrained environments. My work bridges sensor fusion, applied machine learning, and hardware engineering to solve systemic challenges in Indian agriculture and public health. I build systems for the people commercial technology overlooks: smallholder farmers without reliable internet, informal workers without smartphones, and rural citizens outside English-language infrastructure. My engineering philosophy centers on auditable decision logic, safety-interlocked automation, and hardware ruggedness.',
   philosophyPillars: [
@@ -202,6 +266,34 @@ export const DEFAULT_PUBLICATIONS: Publication[] = [
   note      = {Poster Accepted}
 }`,
   },
+  {
+    id: 'pub-kavach-ssci-2026',
+    indexLabel: '[3]',
+    title:
+      "Aarogya Kavach: A Phone-Free, Voice-Driven Wristband for Cardiac and Heat-Stress Early Warning in India's Smartphone-less Workforce",
+    venue: 'IEEE Symposium Series on Computational Intelligence (SSCI)',
+    year: '2026',
+    status: 'Late-Breaking Paper Accepted · Withdrawn',
+    statusType: 'late-breaking',
+    role: 'Sole Author',
+    abstract:
+      'Accepted as a Late-Breaking Paper presenting the same Aarogya Kavach standalone wearable architecture for phone-free cardiac and heat-stress early warning using TinyML and two-tier emergency escalation.',
+    note: 'Withdrawn due to the non-archival nature of the Late-Breaking Paper track.',
+    tags: [
+      'IEEE SSCI',
+      'Late-Breaking Paper',
+      'Withdrawn (Non-Archival)',
+      'Humanitarian Wearables',
+      'TinyML',
+    ],
+    bibtex: `@inproceedings{sharma2026aarogyakavach_ssci,
+  author    = {Sharma, Rahas},
+  title     = {Aarogya Kavach: A Phone-Free, Voice-Driven Wristband for Cardiac and Heat-Stress Early Warning in India's Smartphone-less Workforce},
+  booktitle = {IEEE Symposium Series on Computational Intelligence (SSCI)},
+  year      = {2026},
+  note      = {Accepted as Late-Breaking Paper; withdrawn due to non-archival nature}
+}`,
+  },
 ];
 
 export const DEFAULT_PROJECTS: Project[] = [
@@ -264,7 +356,7 @@ export const DEFAULT_PROJECTS: Project[] = [
     domain: 'Humanitarian Wearables / Edge ML',
     category: 'Humanitarian Wearables',
     year: '2025–2026',
-    statusBadge: 'IEEE GHTC 2026 Poster Accepted',
+    statusBadge: 'IEEE GHTC 2026 & IEEE SSCI Accepted',
     image: '/images/project-kavach.jpg',
     summary:
       'A standalone, voice-driven wristband detecting cardiac anomalies and heat-stress on-device using TinyML, delivering regional-language audio warnings and autonomous 108 cellular emergency dialing without a smartphone.',

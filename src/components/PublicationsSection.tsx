@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BookMarked, Check, Copy, FileText, Info } from 'lucide-react';
+import { BookMarked, FileText, Info } from 'lucide-react';
 import { Publication } from '../data/siteData';
 
 interface PublicationsSectionProps {
@@ -9,18 +9,7 @@ interface PublicationsSectionProps {
 export const PublicationsSection: React.FC<PublicationsSectionProps> = ({
   publications,
 }) => {
-  const [copiedId, setCopiedId] = useState<string | null>(null);
   const [openBibtexId, setOpenBibtexId] = useState<string | null>(null);
-
-  const handleCopyBibtex = async (pub: Publication) => {
-    try {
-      await navigator.clipboard.writeText(pub.bibtex);
-    } catch {
-      // fallback ignore
-    }
-    setCopiedId(pub.id);
-    setTimeout(() => setCopiedId(null), 2200);
-  };
 
   return (
     <section
@@ -45,7 +34,6 @@ export const PublicationsSection: React.FC<PublicationsSectionProps> = ({
       {/* Publication Cards */}
       <div className="mt-12 space-y-6">
         {publications.map((pub) => {
-          const isCopied = copiedId === pub.id;
           const isBibOpen = openBibtexId === pub.id;
 
           return (
@@ -81,8 +69,12 @@ export const PublicationsSection: React.FC<PublicationsSectionProps> = ({
               <p className="mt-3 flex flex-wrap items-center gap-x-2 gap-y-1 text-sm font-medium text-[var(--text-secondary)]">
                 <BookMarked className="h-4 w-4 text-[var(--accent)]" />
                 <span>{pub.venue}</span>
-                <span className="text-[var(--text-muted)]">·</span>
-                <span className="text-[var(--text-muted)]">{pub.location}</span>
+                {pub.location && (
+                  <>
+                    <span className="text-[var(--text-muted)]">·</span>
+                    <span className="text-[var(--text-muted)]">{pub.location}</span>
+                  </>
+                )}
               </p>
 
               {/* Abstract / Summary */}
@@ -101,7 +93,7 @@ export const PublicationsSection: React.FC<PublicationsSectionProps> = ({
                 </div>
               )}
 
-              {/* Bottom Tags + BibTeX Controls */}
+              {/* Bottom Tags + BibTeX Toggle */}
               <div className="mt-6 flex flex-wrap items-center justify-between gap-4 border-t border-[var(--border)] pt-5">
                 <div className="flex flex-wrap gap-2">
                   {pub.tags.map((tag) => (
@@ -114,34 +106,13 @@ export const PublicationsSection: React.FC<PublicationsSectionProps> = ({
                   ))}
                 </div>
 
-                <div className="flex items-center gap-2">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      setOpenBibtexId(isBibOpen ? null : pub.id)
-                    }
-                    className="rounded-full border border-[var(--border)] bg-[var(--bg)] px-3.5 py-1.5 font-mono-meta text-[11px] text-[var(--text-secondary)] transition-colors hover:border-[var(--border-strong)] hover:text-[var(--text)] cursor-pointer"
-                  >
-                    {isBibOpen ? 'Hide BibTeX' : 'BibTeX'}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={() => handleCopyBibtex(pub)}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-strong)] bg-[var(--surface)] px-3.5 py-1.5 font-mono-meta text-[11px] text-[var(--text)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)] cursor-pointer"
-                  >
-                    {isCopied ? (
-                      <>
-                        <Check className="h-3 w-3 text-[var(--accent)]" />
-                        <span className="text-[var(--accent)]">Copied</span>
-                      </>
-                    ) : (
-                      <>
-                        <Copy className="h-3 w-3" />
-                        <span>Copy Citation</span>
-                      </>
-                    )}
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  onClick={() => setOpenBibtexId(isBibOpen ? null : pub.id)}
+                  className="rounded-full border border-[var(--border)] bg-[var(--bg)] px-3.5 py-1.5 font-mono-meta text-[11px] text-[var(--text-secondary)] transition-colors hover:border-[var(--border-strong)] hover:text-[var(--text)] cursor-pointer"
+                >
+                  {isBibOpen ? 'Hide BibTeX' : 'BibTeX'}
+                </button>
               </div>
 
               {/* Expandable BibTeX Code */}

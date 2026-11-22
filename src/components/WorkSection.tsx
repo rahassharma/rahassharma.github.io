@@ -88,9 +88,24 @@ export const WorkSection: React.FC<WorkSectionProps> = ({
             <div className="relative aspect-[16/11] w-full overflow-hidden bg-[var(--surface-subtle)] lg:col-span-5 lg:aspect-auto lg:min-h-[340px]">
               <img
                 src={project.image}
-                alt={`${project.title} — ${project.subtitle}`}
+                alt={project.imageAlt || `${project.title} — ${project.subtitle}`}
                 loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.04]"
+                style={{
+                  objectPosition: project.imagePosition || '50% 50%',
+                  transform:
+                    project.imageZoom && project.imageZoom !== 1
+                      ? `scale(${project.imageZoom})`
+                      : undefined,
+                }}
+                className={`h-full w-full transition-transform duration-700 ease-out ${
+                  project.imageFit === 'contain'
+                    ? 'object-contain'
+                    : 'object-cover'
+                } ${
+                  !project.imageZoom || project.imageZoom === 1
+                    ? 'group-hover:scale-[1.04]'
+                    : ''
+                }`}
               />
               <span className="absolute left-4 top-4 rounded-full border border-white/25 bg-black/55 px-3 py-1 font-mono-meta text-[10px] uppercase tracking-wider text-white backdrop-blur-md">
                 {project.statusBadge}

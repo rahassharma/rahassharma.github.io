@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { Moon, Sun, SlidersHorizontal, Menu, X } from 'lucide-react';
+import { Moon, Sun, Menu, X, Lock, LayoutDashboard, LogOut } from 'lucide-react';
 import { SiteProfile } from '../data/siteData';
 
 interface NavbarProps {
   profile: SiteProfile;
   theme: 'light' | 'dark';
+  isAdmin: boolean;
   onToggleTheme: () => void;
-  onOpenCustomize: () => void;
+  onOpenAdmin: () => void;
+  onLogout: () => void;
 }
 
 const NAV_LINKS = [
@@ -20,8 +22,10 @@ const NAV_LINKS = [
 export const Navbar: React.FC<NavbarProps> = ({
   profile,
   theme,
+  isAdmin,
   onToggleTheme,
-  onOpenCustomize,
+  onOpenAdmin,
+  onLogout,
 }) => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -41,7 +45,6 @@ export const Navbar: React.FC<NavbarProps> = ({
       }`}
     >
       <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4 sm:px-8">
-        {/* Brand Monogram + Name */}
         <a
           href="#top"
           className="group flex items-center gap-3 focus:outline-none"
@@ -51,8 +54,13 @@ export const Navbar: React.FC<NavbarProps> = ({
             {profile.monogram || profile.name.slice(0, 2).toUpperCase()}
           </span>
           <div className="flex flex-col">
-            <span className="text-sm font-semibold leading-tight tracking-tight text-[var(--text)]">
+            <span className="flex items-center gap-1.5 text-sm font-semibold leading-tight tracking-tight text-[var(--text)]">
               {profile.name}
+              {isAdmin && (
+                <span className="rounded-full bg-[var(--accent-soft)] px-1.5 py-0.5 font-mono-meta text-[9px] font-medium uppercase tracking-wider text-[var(--accent)]">
+                  Admin
+                </span>
+              )}
             </span>
             <span className="hidden font-mono-meta text-[10px] text-[var(--text-muted)] sm:inline">
               Independent Researcher
@@ -60,7 +68,6 @@ export const Navbar: React.FC<NavbarProps> = ({
           </div>
         </a>
 
-        {/* Desktop Nav */}
         <nav className="hidden items-center gap-7 md:flex" aria-label="Primary">
           {NAV_LINKS.map((link) => (
             <a
@@ -73,17 +80,41 @@ export const Navbar: React.FC<NavbarProps> = ({
           ))}
         </nav>
 
-        {/* Actions */}
         <div className="flex items-center gap-2">
           <button
             type="button"
-            onClick={onOpenCustomize}
-            className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border)] bg-[var(--surface)] px-3.5 py-1.5 text-xs font-medium text-[var(--text-secondary)] transition-all hover:border-[var(--border-strong)] hover:text-[var(--text)] cursor-pointer"
-            title="Edit profile & appearance"
+            onClick={onOpenAdmin}
+            className={`inline-flex items-center gap-1.5 rounded-full border px-3.5 py-1.5 text-xs font-medium transition-all cursor-pointer ${
+              isAdmin
+                ? 'border-[var(--accent)] bg-[var(--accent-soft)] text-[var(--accent)] hover:opacity-90'
+                : 'border-[var(--border)] bg-[var(--surface)] text-[var(--text-secondary)] hover:border-[var(--border-strong)] hover:text-[var(--text)]'
+            }`}
+            title={isAdmin ? 'Open admin studio' : 'Admin login'}
           >
-            <SlidersHorizontal className="h-3.5 w-3.5 text-[var(--accent)]" />
-            <span>Edit</span>
+            {isAdmin ? (
+              <>
+                <LayoutDashboard className="h-3.5 w-3.5" />
+                <span>Studio</span>
+              </>
+            ) : (
+              <>
+                <Lock className="h-3.5 w-3.5" />
+                <span>Admin</span>
+              </>
+            )}
           </button>
+
+          {isAdmin && (
+            <button
+              type="button"
+              onClick={onLogout}
+              className="hidden h-8 w-8 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface)] text-[var(--text-secondary)] transition-colors hover:border-red-300 hover:text-red-600 sm:flex cursor-pointer"
+              aria-label="Log out admin"
+              title="Log out"
+            >
+              <LogOut className="h-3.5 w-3.5" />
+            </button>
+          )}
 
           <button
             type="button"
@@ -98,7 +129,6 @@ export const Navbar: React.FC<NavbarProps> = ({
             )}
           </button>
 
-          {/* Mobile Menu Toggle */}
           <button
             type="button"
             onClick={() => setMobileOpen((prev) => !prev)}
@@ -110,7 +140,6 @@ export const Navbar: React.FC<NavbarProps> = ({
         </div>
       </div>
 
-      {/* Mobile Nav Dropdown */}
       {mobileOpen && (
         <div className="border-t border-[var(--border)] bg-[var(--bg)] px-6 py-4 md:hidden">
           <nav className="flex flex-col gap-3">

@@ -81,8 +81,17 @@ export const ProjectModal: React.FC<ProjectModalProps> = ({ project, onClose }) 
           <div className="mt-6 aspect-[16/10] w-full overflow-hidden rounded-xl border border-[var(--border)] bg-[var(--surface-subtle)]">
             <img
               src={project.image}
-              alt={project.title}
-              className="h-full w-full object-cover"
+              alt={project.imageAlt || project.title}
+              style={{
+                objectPosition: project.imagePosition || '50% 50%',
+                transform:
+                  project.imageZoom && project.imageZoom !== 1
+                    ? `scale(${project.imageZoom})`
+                    : undefined,
+              }}
+              className={`h-full w-full ${
+                project.imageFit === 'contain' ? 'object-contain' : 'object-cover'
+              }`}
             />
           </div>
 

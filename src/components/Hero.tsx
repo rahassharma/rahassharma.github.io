@@ -7,6 +7,7 @@ import {
   MapPin,
 } from 'lucide-react';
 import { SiteProfile } from '../data/siteData';
+import { SocialIcon } from './SocialIcons';
 
 interface HeroProps {
   profile: SiteProfile;
@@ -78,9 +79,7 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
 
           {/* Concise Credentials Summary */}
           <p className="animate-fade-up-delay-2 mt-6 max-w-xl text-base leading-relaxed text-[var(--text-secondary)] sm:text-[17px] sm:leading-[1.72]">
-            Bridging sensor fusion, applied machine learning, and rugged hardware
-            engineering to solve systemic challenges in Indian agriculture and
-            public health — sole author of two 2026 IEEE acceptances.
+            {profile.heroSummary}
           </p>
 
           {/* CTA Group */}
@@ -118,6 +117,22 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
               </svg>
               <span>GitHub</span>
             </a>
+
+            {(profile.socialLinks || [])
+              .filter((s) => s.enabled && s.url.trim().length > 0)
+              .map((social) => (
+                <a
+                  key={social.id}
+                  href={social.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface)] px-4 py-3 text-xs font-medium text-[var(--text-secondary)] transition-colors hover:border-[var(--accent)] hover:text-[var(--accent)]"
+                  title={social.label}
+                >
+                  <SocialIcon platform={social.platform} className="h-4 w-4" />
+                  <span>{social.label}</span>
+                </a>
+              ))}
           </div>
 
           {/* Academic & Location Metadata Strip */}
@@ -167,16 +182,34 @@ export const Hero: React.FC<HeroProps> = ({ profile }) => {
           <figure className="relative overflow-hidden rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-2.5 shadow-[0_12px_40px_-16px_rgba(23,22,20,0.08)]">
             <div className="aspect-[4/5] w-full overflow-hidden rounded-xl bg-[var(--surface-subtle)]">
               <img
-                src="/images/hero-lab.jpg"
-                alt="Edge computing and sensor fusion hardware research bench"
-                className="h-full w-full object-cover transition-transform duration-700 hover:scale-[1.03]"
+                src={profile.heroImage || '/images/hero-lab.jpg'}
+                alt={
+                  profile.heroImageAlt ||
+                  'Edge computing and sensor fusion hardware research bench'
+                }
+                style={{
+                  objectPosition: profile.heroImagePosition || '50% 50%',
+                  transform:
+                    profile.heroImageZoom && profile.heroImageZoom !== 1
+                      ? `scale(${profile.heroImageZoom})`
+                      : undefined,
+                }}
+                className={`h-full w-full transition-transform duration-700 ${
+                  profile.heroImageFit === 'contain'
+                    ? 'object-contain'
+                    : 'object-cover'
+                } ${
+                  !profile.heroImageZoom || profile.heroImageZoom === 1
+                    ? 'hover:scale-[1.03]'
+                    : ''
+                }`}
               />
             </div>
-            <figcaption className="flex items-center justify-between px-2 pb-1 pt-3">
+            <figcaption className="flex items-center justify-between gap-2 px-2 pb-1 pt-3">
               <span className="font-mono-meta text-[11px] text-[var(--text-muted)]">
-                FIG. 01 — EDGE HARDWARE BENCH
+                {profile.heroImageCaption || 'FIG. 01 — EDGE HARDWARE BENCH'}
               </span>
-              <span className="font-mono-meta text-[11px] text-[var(--text-secondary)]">
+              <span className="shrink-0 font-mono-meta text-[11px] text-[var(--text-secondary)]">
                 {profile.coordinates}
               </span>
             </figcaption>
